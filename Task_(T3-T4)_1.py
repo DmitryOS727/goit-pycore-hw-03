@@ -1,10 +1,12 @@
 from datetime import datetime
 
 def get_days_from_today(date: str) -> int:    #Повернення цілого числа
-    
-    past_date = datetime.strptime(date, "%d-%m-%Y")    # Перетворення рядка в об'єкт datetime
-    date_now = datetime.today()    # Отримання поточної дати
-    return date_now.toordinal() - past_date.toordinal()    # Розрахунок кількості днів
-print(f"Різниця між поточним часом і заданою датою: {get_days_from_today('24-02-2022')} днів")
-
-
+    try:
+        past_date = datetime.strptime(date, "%Y-%m-%d").date()    # Перетворення рядка в об'єкт дати
+    except ValueError:
+        print("Неправильний формат дати. Використовуйте формат 'YYYY-MM-DD'.")
+        return None  # Повернення у разі помилки
+    date_now = datetime.today().date()    # Отримання поточної дати
+    diff_days = date_now - past_date    # Розрахунок кількості днів
+    return diff_days.days    # Повернення кількості днів
+print(f"Різниця між поточною і заданою датою: {get_days_from_today('2022-02-24')} днів")
